@@ -17,7 +17,7 @@ function setAuthCookie(res: Response, token: string): void {
   const isProd = env.nodeEnv === 'production';
   res.cookie(ADMIN_COOKIE_NAME, token, {
     httpOnly: true,
-    sameSite: isProd ? 'none' : 'lax',
+    sameSite: 'lax',
     secure: isProd,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: '/',
@@ -120,7 +120,7 @@ router.post('/logout', (_req, res) => {
   const isProd = env.nodeEnv === 'production';
   res.clearCookie(ADMIN_COOKIE_NAME, {
     path: '/',
-    sameSite: isProd ? 'none' : 'lax',
+    sameSite: 'lax',
     secure: isProd,
   });
   res.json({ success: true });

@@ -3,12 +3,33 @@ import { repos } from '../services/repository.ts';
 
 const router = Router();
 
+function escapeXml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 function getBaseUrl(req: Request): string {
-  const host = req.get('host') || 'localhost:3000';
-  const proto = req.headers['x-forwarded-proto'] || req.protocol || 'http';
-  return process.env.APP_URL && process.env.APP_URL !== 'MY_APP_URL'
-    ? process.env.APP_URL.replace(/\/$/, '')
-    : `${proto}://${host}`;
+  const candidates = [process.env.FRONTEND_URL, process.env.APP_URL]
+    .filter((v): v is string => Boolean(v && v !== 'MY_APP_URL'))
+    .flatMap((v) => v.split(','))
+    .map((u) => u.trim().replace(/\/+$/, ''))
+    .filter((u) => Boolean(u) && !u.includes('.vercel.app'));
+
+  const renderUrl = candidates.find((u) => u.includes('trust-it.onrender.com'));
+  if (renderUrl) return renderUrl;
+
+  const host = req.get('host');
+  if (host && !host.includes('localhost') && !host.includes('127.0.0.1')) {
+    const protoHeader = req.headers['x-forwarded-proto'];
+    const proto = (Array.isArray(protoHeader) ? protoHeader[0] : protoHeader)?.split(',')[0]?.trim() || req.protocol || 'https';
+    return `${proto}://${host}`;
+  }
+
+  return candidates[0] || 'https://trust-it.onrender.com';
 }
 
 router.get('/robots.txt', (req: Request, res: Response) => {
@@ -71,7 +92,7 @@ router.get('/sitemap.xml', async (req: Request, res: Response, next) => {
     const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
       .map(
         (u) =>
-          `  <url>\n    <loc>${u.loc}</loc>\n    <changefreq>${u.changefreq}</changefreq>\n    <priority>${u.priority}</priority>\n  </url>`
+          `  <url>\n    <loc>${escapeXml(u.loc)}</loc>\n    <changefreq>${u.changefreq}</changefreq>\n    <priority>${u.priority}</priority>\n  </url>`
       )
       .join('\n')}\n</urlset>`;
 

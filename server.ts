@@ -3,13 +3,34 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
-import { createServer as createViteServer } from 'vite';
 import { connectDatabase } from './backend/src/config/db.ts';
 import { env } from './backend/src/config/env.ts';
 import { apiRateLimiter, errorHandler, sanitizeRequest } from './backend/src/middleware/security.ts';
 import apiRouter from './backend/src/routes/index.ts';
 import seoRouter from './backend/src/routes/seoRoutes.ts';
 import { runSeedIfEmpty } from './backend/src/seed/seedData.ts';
+
+function getAllowedOrigins(): string[] {
+  const configured = [env.frontendUrl, process.env.APP_URL]
+    .filter((v): v is string => Boolean(v && v !== 'MY_APP_URL'))
+    .flatMap((v) => v.split(','))
+    .map((u) => u.trim().replace(/\/+$/, ''))
+    .filter(Boolean);
+  return Array.from(
+    new Set([...configured, 'https://trust-it.onrender.com', 'http://localhost:3000'])
+  );
+}
+
+function isAllowedOrigin(origin: string | undefined, allowedOrigins: string[]): boolean {
+  if (!origin) return true;
+  const normalized = origin.replace(/\/+$/, '');
+  if (allowedOrigins.includes(normalized)) return true;
+  if (env.nodeEnv !== 'production') {
+    if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(normalized)) return true;
+    if (/^https:\/\/[a-z0-9-]+\.run\.app$/i.test(normalized)) return true;
+  }
+  return false;
+}
 
 async function bootstrap() {
   await connectDatabase();
@@ -27,9 +48,12 @@ async function bootstrap() {
     })
   );
 
+  const allowedOrigins = getAllowedOrigins();
   app.use(
     cors({
-      origin: [env.frontendUrl, 'http://localhost:3000'],
+      origin: (origin, callback) => {
+        callback(null, isAllowedOrigin(origin, allowedOrigins));
+      },
       credentials: true,
     })
   );
@@ -53,6 +77,7 @@ async function bootstrap() {
   app.use('/api', errorHandler);
 
   if (env.nodeEnv !== 'production') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
@@ -61,7 +86,8 @@ async function bootstrap() {
   } else {
     const distDir = path.resolve(process.cwd(), 'dist');
     app.use(express.static(distDir));
-    app.get('*', (_req, res) => {
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api/')) return next();
       res.sendFile(path.join(distDir, 'index.html'));
     });
   }

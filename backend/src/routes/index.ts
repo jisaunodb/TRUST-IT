@@ -225,4 +225,8 @@ apiRouter.get('/search', async (req, res, next) => {
   }
 });
 
+apiRouter.use((_req, res) => {
+  res.status(404).json({ error: 'API endpoint not found' });
+});
+
 export default apiRouter;

@@ -55,6 +55,20 @@ export function ContactPage() {
   });
 
   useEffect(() => {
+    const svc = searchParams.get('service');
+    const pkg = searchParams.get('package');
+    if (svc || pkg) {
+      setForm((prev) => ({
+        ...prev,
+        service: svc || prev.service,
+        message: pkg
+          ? `Interested in the ${pkg} package for ${svc || prev.service}. Please share next steps and onboarding timeline.`
+          : prev.message,
+      }));
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
     api
       .get<{ items: ServiceItem[] }>('/services?limit=50')
       .then((res) => {
@@ -332,6 +346,7 @@ export function SearchPage() {
   });
 
   useEffect(() => {
+    setQuery(initialQ);
     if (!initialQ.trim()) {
       setResults(null);
       return;
@@ -340,6 +355,7 @@ export function SearchPage() {
     api
       .get<any>(`/search?q=${encodeURIComponent(initialQ)}`)
       .then((res) => setResults(res))
+      .catch(() => setResults({ services: [], solutions: [], projects: [], caseStudies: [], blogs: [] }))
       .finally(() => setLoading(false));
   }, [initialQ]);
 
