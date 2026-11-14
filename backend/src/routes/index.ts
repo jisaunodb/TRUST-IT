@@ -3,7 +3,7 @@ import authRoutes from './authRoutes.ts';
 import adminRoutes from './adminRoutes.ts';
 import { createCrudRouter } from './crudFactory.ts';
 import { applicationsRouter, contactRouter, newsletterRouter } from './publicSubmissionRoutes.ts';
-import { isMongoConnected } from '../config/db.ts';
+import { getActiveDatabaseName, isMongoConnected } from '../config/db.ts';
 import { requireAdminAuth, requireRole } from '../middleware/auth.ts';
 import { repos } from '../services/repository.ts';
 
@@ -14,6 +14,7 @@ apiRouter.get('/health', (_req, res) => {
     status: 'ok',
     service: 'Trust IT API',
     database: isMongoConnected() ? 'mongodb' : 'local-json',
+    dbName: getActiveDatabaseName(),
   });
 });
 
