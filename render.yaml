@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: trust-it-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run start:backend
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FRONTEND_URL
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: ADMIN_SEED_EMAIL
+        value: mdjisaun86@gmail.com
+      - key: ADMIN_SEED_PASSWORD
+        sync: false
+      - key: ADMIN_SEED_NAME
+        value: Md Jisaun
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

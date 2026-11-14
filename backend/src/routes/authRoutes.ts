@@ -14,10 +14,11 @@ import { loginSchema, setupAdminSchema } from '../validators/schemas.ts';
 const router = Router();
 
 function setAuthCookie(res: Response, token: string): void {
+  const isProd = env.nodeEnv === 'production';
   res.cookie(ADMIN_COOKIE_NAME, token, {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: env.nodeEnv === 'production',
+    sameSite: isProd ? 'none' : 'lax',
+    secure: isProd,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     path: '/',
   });
@@ -116,7 +117,12 @@ router.post('/login', authRateLimiter, async (req, res, next) => {
 
 // POST /api/auth/logout
 router.post('/logout', (_req, res) => {
-  res.clearCookie(ADMIN_COOKIE_NAME, { path: '/' });
+  const isProd = env.nodeEnv === 'production';
+  res.clearCookie(ADMIN_COOKIE_NAME, {
+    path: '/',
+    sameSite: isProd ? 'none' : 'lax',
+    secure: isProd,
+  });
   res.json({ success: true });
 });
 

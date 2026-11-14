@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { api, setUnauthorizedHandler } from '../services/api';
+import { api, setAuthToken, setUnauthorizedHandler } from '../services/api';
 import { AdminUser } from '../types';
 
 interface AuthContextValue {
@@ -43,19 +43,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setUnauthorizedHandler(() => {
+      setAuthToken(null);
       setAdmin(null);
     });
     refreshAdmin();
   }, [refreshAdmin]);
 
   const login = async (email: string, password: string) => {
-    const res = await api.post<{ admin: AdminUser }>('/auth/login', { email, password });
+    const res = await api.post<{ admin: AdminUser; token?: string }>('/auth/login', { email, password });
+    if (res.token) setAuthToken(res.token);
     setAdmin(res.admin);
     setNeedsSetup(false);
   };
 
   const setupFirstAdmin = async (name: string, email: string, password: string) => {
-    const res = await api.post<{ admin: AdminUser }>('/auth/setup-admin', { name, email, password });
+    const res = await api.post<{ admin: AdminUser; token?: string }>('/auth/setup-admin', { name, email, password });
+    if (res.token) setAuthToken(res.token);
     setAdmin(res.admin);
     setNeedsSetup(false);
   };
@@ -64,6 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await api.post('/auth/logout');
     } finally {
+      setAuthToken(null);
       setAdmin(null);
     }
   };

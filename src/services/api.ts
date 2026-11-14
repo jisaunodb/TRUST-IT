@@ -1,6 +1,27 @@
 import { MediaAsset } from '../types';
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+const API_BASE = (import.meta.env.VITE_API_URL || '/api').replace(/\/+$/, '');
+const TOKEN_STORAGE_KEY = 'trustit_admin_bearer';
+
+export function setAuthToken(token: string | null) {
+  try {
+    if (token) {
+      sessionStorage.setItem(TOKEN_STORAGE_KEY, token);
+    } else {
+      sessionStorage.removeItem(TOKEN_STORAGE_KEY);
+    }
+  } catch {
+    // Ignore storage access errors
+  }
+}
+
+export function getAuthToken(): string | null {
+  try {
+    return sessionStorage.getItem(TOKEN_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
 
 type UnauthorizedHandler = () => void;
 let onUnauthorized: UnauthorizedHandler | null = null;
@@ -21,9 +42,14 @@ export class ApiError extends Error {
 
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const isFormData = options.body instanceof FormData;
+  const token = getAuthToken();
   const headers: Record<string, string> = isFormData
     ? {}
     : { 'Content-Type': 'application/json' };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
 
   const res = await fetch(`${API_BASE}${path}`, {
     ...options,
@@ -35,6 +61,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   });
 
   if (res.status === 401 && !path.startsWith('/auth/login') && !path.startsWith('/auth/me')) {
+    setAuthToken(null);
     onUnauthorized?.();
   }
 
