@@ -29,9 +29,9 @@ export function AdminLoginPage() {
     setError('');
     try {
       if (needsSetup) {
-        await setupFirstAdmin(name, email, password);
+        await setupFirstAdmin(name.trim(), email.trim(), password);
       } else {
-        await login(email, password);
+        await login(email.trim(), password);
       }
       navigate('/admin', { replace: true });
     } catch (err: any) {
@@ -80,7 +80,7 @@ export function AdminLoginPage() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Tariqul Islam"
+                placeholder="Md Jisaun"
                 className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-blue-700"
               />
             </div>
@@ -97,7 +97,7 @@ export function AdminLoginPage() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@trustit.com.bd"
+              placeholder="mdjisaun86@gmail.com"
               className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-blue-700"
             />
           </div>

@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
 export const loginSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
+  email: z.string().trim().email('Please enter a valid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
 export const setupAdminSchema = z.object({
-  name: z.string().min(2, 'Full name is required'),
-  email: z.string().email('Valid email is required'),
+  name: z.string().trim().min(2, 'Full name is required'),
+  email: z.string().trim().email('Valid email is required'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 

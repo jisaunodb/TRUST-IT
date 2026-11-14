@@ -736,18 +736,25 @@ const defaultSettings = {
 };
 
 export async function runSeedIfEmpty(): Promise<void> {
-  // Optional env-driven admin bootstrap when zero admins exist
-  const adminCount = await repos.admins.count();
-  if (adminCount === 0 && env.adminSeedEmail && env.adminSeedPassword) {
-    const passwordHash = await bcrypt.hash(env.adminSeedPassword, 12);
-    await repos.admins.create({
-      email: env.adminSeedEmail.toLowerCase(),
-      passwordHash,
-      name: env.adminSeedName,
-      role: 'SUPER_ADMIN',
-      isActive: true,
-    });
-    console.log('[Seed] Initial Super Admin bootstrapped from environment config');
+  // Optional env-driven admin bootstrap when configured seed email does not yet exist
+  if (
+    env.adminSeedEmail &&
+    env.adminSeedPassword &&
+    env.adminSeedPassword !== 'CHANGE_ME_STRONG_PASSWORD'
+  ) {
+    const normalizedSeedEmail = env.adminSeedEmail.trim().toLowerCase();
+    const existingSeedAdmin = await repos.admins.findOne({ email: normalizedSeedEmail });
+    if (!existingSeedAdmin) {
+      const passwordHash = await bcrypt.hash(env.adminSeedPassword, 12);
+      await repos.admins.create({
+        email: normalizedSeedEmail,
+        passwordHash,
+        name: env.adminSeedName,
+        role: 'SUPER_ADMIN',
+        isActive: true,
+      });
+      console.log(`[Seed] Super Admin bootstrapped for ${normalizedSeedEmail}`);
+    }
   }
 
   if ((await repos.websiteSettings.count()) === 0) {
