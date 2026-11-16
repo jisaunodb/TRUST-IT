@@ -1,6 +1,29 @@
 import { MediaAsset } from '../types';
 
-const API_BASE = (import.meta.env.VITE_API_URL || '/api').replace(/\/+$/, '');
+function resolveApiBase(): string {
+  const configured = (import.meta.env.VITE_API_URL || '').trim().replace(/\/+$/, '');
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    const isSameOriginDeployment =
+      host === 'localhost' ||
+      host === '127.0.0.1' ||
+      host.endsWith('.run.app') ||
+      host === 'trust-it.onrender.com';
+    if (isSameOriginDeployment) {
+      return '/api';
+    }
+    if (configured && configured.startsWith(window.location.origin)) {
+      return '/api';
+    }
+  }
+  if (!configured) return '/api';
+  if (/^https?:\/\//i.test(configured) && !configured.endsWith('/api')) {
+    return `${configured}/api`;
+  }
+  return configured;
+}
+
+const API_BASE = resolveApiBase();
 const TOKEN_STORAGE_KEY = 'trustit_admin_bearer';
 
 export function setAuthToken(token: string | null) {

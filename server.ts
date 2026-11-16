@@ -33,8 +33,11 @@ function isAllowedOrigin(origin: string | undefined, allowedOrigins: string[]): 
 }
 
 async function bootstrap() {
-  await connectDatabase();
-  await runSeedIfEmpty();
+  const dbReadyPromise = connectDatabase()
+    .then(() => runSeedIfEmpty())
+    .catch((err) => {
+      console.error('[Trust IT] Database initialization warning:', err);
+    });
 
   const app = express();
   app.set('trust proxy', 1);
@@ -67,6 +70,14 @@ async function bootstrap() {
   app.use('/uploads', express.static(path.resolve(process.cwd(), 'public', 'uploads')));
   app.use('/src/assets/images', express.static(path.resolve(process.cwd(), 'src', 'assets', 'images')));
 
+  // Ensure DB & seed finish before serving dynamic API or sitemap data (keep /api/health instant)
+  app.use(async (req, _res, next) => {
+    if (req.path === '/sitemap.xml' || (req.path.startsWith('/api/') && req.path !== '/api/health')) {
+      await dbReadyPromise;
+    }
+    next();
+  });
+
   // SEO XML Sitemap & Robots.txt
   app.use('/', seoRouter);
 
@@ -92,8 +103,32 @@ async function bootstrap() {
     });
   }
 
+function startKeepAlive(): void {
+  if (env.nodeEnv !== 'production') return;
+  const targetUrl =
+    process.env.KEEP_ALIVE_URL?.trim() ||
+    (process.env.RENDER ? 'https://trust-it.onrender.com/api/health' : '');
+  if (!targetUrl) return;
+
+  const TEN_MINUTES_MS = 10 * 60 * 1000;
+  const timer = setInterval(async () => {
+    try {
+      await fetch(targetUrl, {
+        method: 'GET',
+        signal: AbortSignal.timeout(10000),
+      });
+    } catch {
+      // Ignore transient network errors during keep-alive checks
+    }
+  }, TEN_MINUTES_MS);
+
+  timer.unref();
+  console.log(`[Trust IT] Keep-alive monitor active every 10m -> ${targetUrl}`);
+}
+
   app.listen(env.port, '0.0.0.0', () => {
     console.log(`[Trust IT] Server running at http://0.0.0.0:${env.port} (${env.nodeEnv})`);
+    startKeepAlive();
   });
 }
 

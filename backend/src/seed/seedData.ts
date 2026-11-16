@@ -783,7 +783,7 @@ export async function runSeedIfEmpty(): Promise<void> {
   const needsServiceUpgrade =
     existingServices.total === 0 ||
     existingServices.items.some((s: any) => !s.filterGroup || !s.status) ||
-    !smmService?.packages?.length;
+    !smmService?.packages?.some((p: any) => p.name.includes('BIN Verification'));
   if (needsServiceUpgrade) {
     await repos.services.clearAll();
     for (const s of seedServices) await repos.services.create(s);

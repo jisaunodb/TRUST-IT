@@ -1,0 +1,15 @@
+name: Keep Render Service Awake
+
+on:
+  schedule:
+    # Ping every 10 minutes so Render free tier does not enter 15-minute sleep mode
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Trust IT health endpoint
+        run: |
+          curl -fsS --max-time 30 "https://trust-it.onrender.com/api/health"
