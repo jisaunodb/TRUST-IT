@@ -7,11 +7,23 @@ import { useSiteSettings } from '../hooks/useSiteSettings';
 import { api } from '../services/api';
 import { BlogPostItem, CaseStudyItem, ProjectItem, ServiceItem, SolutionItem } from '../types';
 
+const BUDGET_PRESETS = [
+  '৳490 – ৳25,000 (Social Media / Design Package)',
+  '৳25,000 – ৳150,000 (Monthly Marketing / Starter Web)',
+  '৳150,000 – ৳300,000 ($1.5K – $2.5K)',
+  '৳300,000 – ৳800,000 ($2.5K – $7K)',
+  '৳800,000 – ৳2,500,000 ($7K – $20K)',
+  '৳2,500,000+ ($20K+ Enterprise)',
+];
+
+const CUSTOM_BUDGET_OPTION = 'CUSTOM';
+
 export function ContactPage() {
   const { settings } = useSiteSettings();
   const [searchParams] = useSearchParams();
   const initialService = searchParams.get('service') || 'Web Development';
   const initialPackage = searchParams.get('package') || '';
+  const initialBudgetParam = searchParams.get('budget') || '';
 
   const [serviceOptions, setServiceOptions] = useState<string[]>([
     'Web Development',
@@ -38,11 +50,28 @@ export function ContactPage() {
     phone: '',
     company: '',
     service: initialService,
-    budget: '৳300,000 – ৳800,000 ($2.5K – $7K)',
+    budget:
+      initialBudgetParam.toLowerCase() === 'custom'
+        ? CUSTOM_BUDGET_OPTION
+        : BUDGET_PRESETS.includes(initialBudgetParam)
+        ? initialBudgetParam
+        : initialBudgetParam
+        ? CUSTOM_BUDGET_OPTION
+        : '৳300,000 – ৳800,000 ($2.5K – $7K)',
     message: initialPackage
       ? `Interested in the ${initialPackage} package for ${initialService}. Please share next steps and onboarding timeline.`
       : '',
   });
+  const [budgetCurrency, setBudgetCurrency] = useState<'BDT' | 'USD'>(
+    initialBudgetParam.includes('$') || /usd/i.test(initialBudgetParam) ? 'USD' : 'BDT'
+  );
+  const [customBudgetAmount, setCustomBudgetAmount] = useState(
+    initialBudgetParam &&
+      initialBudgetParam.toLowerCase() !== 'custom' &&
+      !BUDGET_PRESETS.includes(initialBudgetParam)
+      ? initialBudgetParam.replace(/^[৳$]\s*/, '').trim()
+      : ''
+  );
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -57,14 +86,26 @@ export function ContactPage() {
   useEffect(() => {
     const svc = searchParams.get('service');
     const pkg = searchParams.get('package');
-    if (svc || pkg) {
+    const bgt = searchParams.get('budget');
+    if (svc || pkg || bgt) {
       setForm((prev) => ({
         ...prev,
         service: svc || prev.service,
+        budget: bgt
+          ? bgt.toLowerCase() === 'custom'
+            ? CUSTOM_BUDGET_OPTION
+            : BUDGET_PRESETS.includes(bgt)
+            ? bgt
+            : CUSTOM_BUDGET_OPTION
+          : prev.budget,
         message: pkg
           ? `Interested in the ${pkg} package for ${svc || prev.service}. Please share next steps and onboarding timeline.`
           : prev.message,
       }));
+      if (bgt && bgt.toLowerCase() !== 'custom' && !BUDGET_PRESETS.includes(bgt)) {
+        setBudgetCurrency(bgt.includes('$') || /usd/i.test(bgt) ? 'USD' : 'BDT');
+        setCustomBudgetAmount(bgt.replace(/^[৳$]\s*/, '').trim());
+      }
     }
   }, [searchParams]);
 
@@ -81,13 +122,28 @@ export function ContactPage() {
       .catch(() => {});
   }, [initialService]);
 
+  const isCustomBudget = form.budget === CUSTOM_BUDGET_OPTION;
+  const formattedCustomBudget = customBudgetAmount.trim()
+    ? `${budgetCurrency === 'BDT' ? '৳' : '$'}${customBudgetAmount.trim()} ${budgetCurrency} (Custom Price)`
+    : '';
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
     setErrorMsg('');
     setSuccessMsg('');
+
+    const finalBudget = isCustomBudget ? formattedCustomBudget : form.budget;
+    if (isCustomBudget && (!customBudgetAmount.trim() || !/[0-9]/.test(customBudgetAmount))) {
+      setErrorMsg('Please enter your custom budget amount (for example: 15,000 or 500).');
+      return;
+    }
+
+    setSubmitting(true);
     try {
-      const res = await api.post<{ message: string }>('/contact', form);
+      const res = await api.post<{ message: string }>('/contact', {
+        ...form,
+        budget: finalBudget,
+      });
       setSuccessMsg(res.message);
       setForm({
         name: '',
@@ -98,6 +154,8 @@ export function ContactPage() {
         budget: '৳300,000 – ৳800,000 ($2.5K – $7K)',
         message: '',
       });
+      setBudgetCurrency('BDT');
+      setCustomBudgetAmount('');
     } catch (err: any) {
       setErrorMsg(err.details?.join(', ') || err.message || 'Unable to send message.');
     } finally {
@@ -276,22 +334,73 @@ export function ContactPage() {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="c-budget" className="block text-xs font-semibold text-slate-700 mb-1.5">
-                      Estimated Budget *
-                    </label>
+                    <div className="flex items-center justify-between gap-2 mb-1.5">
+                      <label htmlFor="c-budget" className="block text-xs font-semibold text-slate-700">
+                        Estimated Budget *
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (isCustomBudget) {
+                            setForm({ ...form, budget: BUDGET_PRESETS[3] });
+                          } else {
+                            setForm({ ...form, budget: CUSTOM_BUDGET_OPTION });
+                          }
+                        }}
+                        className="text-[11px] font-semibold text-blue-700 hover:text-blue-800 cursor-pointer"
+                      >
+                        {isCustomBudget ? 'Use Preset Ranges' : 'Enter Custom Price'}
+                      </button>
+                    </div>
                     <select
                       id="c-budget"
                       value={form.budget}
                       onChange={(e) => setForm({ ...form, budget: e.target.value })}
                       className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg bg-white focus:outline-none focus:border-blue-700"
                     >
-                      <option value="৳490 – ৳25,000 (Social Media / Design Package)">৳490 – ৳25,000 (Social Media / Design Package)</option>
-                      <option value="৳25,000 – ৳150,000 (Monthly Marketing / Starter Web)">৳25,000 – ৳150,000 (Monthly Marketing / Starter Web)</option>
-                      <option value="৳150,000 – ৳300,000 ($1.5K – $2.5K)">৳150,000 – ৳300,000 ($1.5K – $2.5K)</option>
-                      <option value="৳300,000 – ৳800,000 ($2.5K – $7K)">৳300,000 – ৳800,000 ($2.5K – $7K)</option>
-                      <option value="৳800,000 – ৳2,500,000 ($7K – $20K)">৳800,000 – ৳2,500,000 ($7K – $20K)</option>
-                      <option value="৳2,500,000+ ($20K+ Enterprise)">৳2,500,000+ ($20K+ Enterprise)</option>
+                      {BUDGET_PRESETS.map((preset) => (
+                        <option key={preset} value={preset}>
+                          {preset}
+                        </option>
+                      ))}
+                      <option value={CUSTOM_BUDGET_OPTION}>Custom Price (Enter Your Budget)</option>
                     </select>
+
+                    {isCustomBudget && (
+                      <div className="mt-2.5 space-y-1.5">
+                        <div className="flex gap-2">
+                          <select
+                            aria-label="Custom budget currency"
+                            value={budgetCurrency}
+                            onChange={(e) => setBudgetCurrency(e.target.value as 'BDT' | 'USD')}
+                            className="px-3 py-2.5 text-sm font-semibold border border-slate-200 rounded-lg bg-slate-50 text-slate-800 focus:outline-none focus:border-blue-700 shrink-0"
+                          >
+                            <option value="BDT">৳ BDT</option>
+                            <option value="USD">$ USD</option>
+                          </select>
+                          <input
+                            id="c-custom-budget"
+                            type="text"
+                            inputMode="decimal"
+                            required={isCustomBudget}
+                            value={customBudgetAmount}
+                            onChange={(e) => setCustomBudgetAmount(e.target.value)}
+                            placeholder={
+                              budgetCurrency === 'BDT'
+                                ? 'Enter amount (e.g. 15,000 or 20,000 – 35,000)'
+                                : 'Enter amount (e.g. 500 or 1,200 – 2,000)'
+                            }
+                            aria-label="Custom budget amount"
+                            className="w-full px-3.5 py-2.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-blue-700"
+                          />
+                        </div>
+                        <p className="text-[11px] text-slate-500">
+                          {formattedCustomBudget
+                            ? `Selected budget: ${formattedCustomBudget}`
+                            : 'Specify your exact target price or range in BDT (৳) or USD ($).'}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
 

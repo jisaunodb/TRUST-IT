@@ -143,7 +143,7 @@ export function CtaSection() {
     <section className="bg-slate-950 text-white border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-6 py-20 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
         <div className="max-w-2xl">
-          <p className="text-xs font-medium text-sky-400 mb-3">12+ Years of Engineering Delivery</p>
+          <p className="text-xs font-medium text-sky-400 mb-3">6+ Years of Engineering Delivery</p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white text-balance">
             Have an idea? Let&apos;s build it together.
           </h2>

@@ -14,7 +14,7 @@ const seedProjects = [
     description: 'Trust IT engineered a high-security treasury portal enabling corporate finance teams to authorize multi-tier payroll, vendor settlements, and automated bank reconciliation.',
     challenge: 'Legacy CSV uploads and manual spreadsheet checks took 3 business days per settlement cycle and created audit bottlenecks.',
     solution: 'Built a maker-checker web platform with real-time ledger verification, role-based cryptographic signing, and automated exception alerts.',
-    technologies: ['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Redis', 'AWS'],
+    technologies: ['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'AWS'],
     results: ['Settlement cycle reduced from 72 hours to 12 minutes', '100% automated ledger reconciliation accuracy', 'Zero security incidents across 24 months'],
     metrics: [
       { label: 'Monthly Volume', value: '৳450Cr+' },
@@ -38,7 +38,7 @@ const seedProjects = [
     description: 'We replaced 4 disconnected systems with a single omnichannel commerce and ERP core serving online shoppers and 28 physical retail outlets across Dhaka, Chattogram, and Sylhet.',
     challenge: 'Overselling online due to delayed outlet stock sync and manual courier booking across 1,500+ daily orders.',
     solution: 'Engineered real-time inventory reservation, offline-capable showroom POS, and direct Steadfast & Pathao courier API dispatch.',
-    technologies: ['Next.js', 'React', 'Node.js', 'MongoDB', 'Redis', 'Cloudinary'],
+    technologies: ['Next.js', 'React', 'Node.js', 'MongoDB', 'Cloudinary'],
     results: ['+42% online conversion rate within 90 days', '99.4% inventory accuracy across 28 branches', '70% reduction in dispatch errors'],
     metrics: [
       { label: 'Conversion Lift', value: '+42%' },
@@ -86,7 +86,7 @@ const seedProjects = [
     description: 'High-throughput logistics backbone handling nationwide parcel scanning, rider proof-of-delivery capture, and merchant settlement dashboards.',
     challenge: 'Delayed COD reconciliation eroded merchant trust, and manual hub sorting caused route misdeliveries.',
     solution: 'Built a React Native rider app with barcode scanning and an automated COD ledger settling 4,000+ merchants daily.',
-    technologies: ['React Native', 'Node.js', 'MongoDB', 'Redis', 'Google Cloud'],
+    technologies: ['React Native', 'Node.js', 'MongoDB', 'Google Cloud'],
     results: ['97.4% on-time delivery SLA across 64 districts', 'Merchant COD payouts automated in 24 hours', '3x faster hub sorting'],
     metrics: [
       { label: 'District Coverage', value: '64' },
@@ -157,9 +157,9 @@ const seedCaseStudies = [
     problem: 'Bengal Thread operated separate POS databases per store and an isolated WooCommerce site, causing 14% order cancellations from phantom stock.',
     challenge: 'Showrooms frequently suffered internet instability during peak Eid campaigns, making naive cloud-only POS architectures unviable.',
     research: 'Our architects shadowed floor cashiers and warehouse packers in Dhaka and Gazipur for two weeks to map peak checkout latency and return workflows.',
-    strategy: 'Adopt a hybrid event-driven inventory core backed by Redis stock locks and an IndexedDB offline-first POS shell that syncs automatically on reconnect.',
+    strategy: 'Adopt a hybrid event-driven inventory core backed by atomic database stock locks and an IndexedDB offline-first POS shell that syncs automatically on reconnect.',
     solution: 'Engineered a custom Next.js storefront, offline-resilient React POS, and Express/MongoDB central inventory service with automated Steadfast & Pathao courier dispatch.',
-    technologies: ['Next.js', 'React', 'TypeScript', 'Node.js', 'MongoDB', 'Redis', 'Cloudinary'],
+    technologies: ['Next.js', 'React', 'TypeScript', 'Node.js', 'MongoDB', 'Cloudinary'],
     implementation: 'Rolled out in 3 phased waves across 14 weeks: pilot at 3 flagship Dhaka outlets, warehouse barcode migration, then nationwide 28-branch cutover before peak season.',
     results: ['+42% online conversion rate in Q1 post-launch', 'Order cancellation from stockout dropped from 14% to 0.3%', '1,800+ daily orders processed with 30% fewer warehouse hours'],
     businessImpact: 'Unlocked BDT 18 Crore in incremental annual digital revenue while cutting manual inventory reconciliation costs.',
@@ -188,7 +188,7 @@ const seedCaseStudies = [
     research: 'Conducted threat modeling and compliance workshops with internal risk officers and corporate treasury controllers.',
     strategy: 'Implement strict role segregation (maker, checker, authorizer), immutable audit logs, and asynchronous worker queues for bank gateway clearing.',
     solution: 'Delivered an enterprise Next.js and PostgreSQL/Node.js treasury platform with automated mismatch detection and instant reconciliation exports.',
-    technologies: ['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Redis', 'AWS'],
+    technologies: ['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'AWS'],
     implementation: 'Executed parallel dry-run validation alongside legacy workflows for 30 days to verify 100% ledger parity before full cutover.',
     results: ['Settlement cycle cut from 72 hours to 12 minutes', '100% audit trail readiness for regulatory reviews', '45% increase in enterprise corporate onboarding'],
     businessImpact: 'Positioned Meghna Financial as the fastest corporate disbursement partner in their segment.',
@@ -252,7 +252,7 @@ const seedBlogPosts = [
     title: 'Architecting High-Availability Web Platforms for Peak Traffic in Bangladesh',
     slug: 'architecting-high-availability-web-platforms-bangladesh',
     excerpt: 'How Bangladeshi e-commerce and fintech teams prevent downtime during Eid campaigns, flash sales, and billing cycles using edge caching and queue-backed APIs.',
-    content: `## Why Peak Traffic Breaks Traditional Monoliths\n\nEvery major campaign season in Dhaka exposes the same architectural flaw: database connection pools saturate while uncached product or dashboard queries pile up.\n\n### 1. Separate Read Paths from Transactional Writes\nUse Redis read-through caching and CDN stale-while-revalidate headers for catalog and editorial pages so 90% of requests never hit your primary database.\n\n### 2. Design Idempotent Payment & Courier Webhooks\nLocal MFS gateways and courier callbacks can retry unpredictably under load. Always enforce idempotency keys and process heavy side effects (PDF invoices, SMS alerts) via background queues.\n\n### 3. Measure Core Web Vitals on Real 4G Connections\nMost Bangladeshi users browse on mid-range Android devices over variable 4G networks. Keep JavaScript bundles lean, optimize images via Cloudinary f_auto/q_auto, and eliminate layout shift.`,
+    content: `## Why Peak Traffic Breaks Traditional Monoliths\n\nEvery major campaign season in Dhaka exposes the same architectural flaw: database connection pools saturate while uncached product or dashboard queries pile up.\n\n### 1. Separate Read Paths from Transactional Writes\nUse indexed read queries and CDN stale-while-revalidate edge caching for catalog and editorial pages so 90% of requests never hit your primary database.\n\n### 2. Design Idempotent Payment & Courier Webhooks\nLocal MFS gateways and courier callbacks can retry unpredictably under load. Always enforce idempotency keys and process heavy side effects (PDF invoices, SMS alerts) via background queues.\n\n### 3. Measure Core Web Vitals on Real 4G Connections\nMost Bangladeshi users browse on mid-range Android devices over variable 4G networks. Keep JavaScript bundles lean, optimize images via Cloudinary f_auto/q_auto, and eliminate layout shift.`,
     author: 'Tariqul Islam',
     authorRole: 'Managing Director & Principal Architect',
     category: 'Web Development',
@@ -270,7 +270,7 @@ const seedBlogPosts = [
     title: 'Zero-Trust Security Checklist for Enterprise Web Applications',
     slug: 'zero-trust-security-checklist-enterprise-web-apps',
     excerpt: 'Practical security controls every CTO in Bangladesh should enforce before launching customer portals, fintech apps, or internal ERPs.',
-    content: `## Security Is Architecture, Not a Final Checkbox\n\nOver 12 years of auditing legacy enterprise software, we consistently see the same preventable risks: exposed admin routes, weak session expiration, and unsanitized query operators.\n\n### Essential Controls\n- Enforce HTTP-only, SameSite cookies for admin authentication with strict role middleware.\n- Validate every request body against explicit schemas (Zod) before database persistence.\n- Apply per-route rate limiting on authentication, lead forms, and file uploads.\n- Maintain automated encrypted backups tested quarterly for restore integrity.`,
+    content: `## Security Is Architecture, Not a Final Checkbox\n\nOver 6 years of auditing legacy enterprise software, we consistently see the same preventable risks: exposed admin routes, weak session expiration, and unsanitized query operators.\n\n### Essential Controls\n- Enforce HTTP-only, SameSite cookies for admin authentication with strict role middleware.\n- Validate every request body against explicit schemas (Zod) before database persistence.\n- Apply per-route rate limiting on authentication, lead forms, and file uploads.\n- Maintain automated encrypted backups tested quarterly for restore integrity.`,
     author: 'Tanvir Ahmed',
     authorRole: 'Head of Cloud & Cybersecurity',
     category: 'Cybersecurity',
@@ -421,7 +421,7 @@ const seedTeam = [
     position: 'Lead Full-Stack Engineer',
     department: 'Engineering',
     bio: 'Architects high-throughput Node.js, MongoDB, and React platforms for omnichannel e-commerce and logistics clients.',
-    skills: ['Node.js', 'React', 'MongoDB', 'Redis', 'REST APIs'],
+    skills: ['Node.js', 'React', 'MongoDB', 'TypeScript', 'REST APIs'],
     experienceYears: 8,
     image: { public_id: 'seed/team/rafiqul', secure_url: IMAGES.md, alt: 'Rafiqul Karim, Lead Full-Stack Engineer' },
     socialLinks: { linkedin: 'https://linkedin.com', github: 'https://github.com' },
@@ -434,8 +434,8 @@ const seedTeam = [
     slug: 'farhan-chowdhury',
     position: 'Mobile Engineering Lead',
     department: 'Mobile',
-    bio: 'Leads cross-platform React Native and Flutter engineering with deep expertise in offline sync and biometric mobile banking UX.',
-    skills: ['React Native', 'Flutter', 'TypeScript', 'Mobile Security'],
+    bio: 'Leads cross-platform React Native and Android/iOS engineering with deep expertise in offline sync and biometric mobile banking UX.',
+    skills: ['React Native', 'Android & iOS Native', 'TypeScript', 'Mobile Security'],
     experienceYears: 8,
     image: { public_id: 'seed/team/farhan', secure_url: IMAGES.lead, alt: 'Farhan Chowdhury, Mobile Engineering Lead' },
     socialLinks: { linkedin: 'https://linkedin.com', github: 'https://github.com' },
@@ -517,7 +517,7 @@ const seedTestimonials = [
 const seedFaqs = [
   {
     question: 'What makes Trust IT different from other IT companies in Bangladesh?',
-    answer: 'With 12+ years of continuous delivery and 500+ completed projects, we combine senior systems architecture, transparent milestone-based project management, and dedicated post-launch SLAs—rather than outsourcing or shipping fragile templates.',
+    answer: 'With 6+ years of continuous delivery and 500+ completed projects, we combine senior systems architecture, transparent milestone-based project management, and dedicated post-launch SLAs—rather than outsourcing or shipping fragile templates.',
     category: 'Company',
     order: 1,
     published: true,
@@ -690,10 +690,10 @@ const defaultSettings = {
   companyName: 'Trust IT',
   tagline: 'Social Media Solutions · Technology You Can Trust',
   altTagline: 'Your Vision, Our Strategy — Creative Solutions, Digital Growth & Lasting Success',
-  experienceYears: 12,
+  experienceYears: 6,
   heroHeadline: 'Building Digital & Social Solutions You Can Trust',
   heroSubheadline:
-    'With 12+ years of experience, Trust IT delivers reliable web development, custom software, social media solutions, graphic design, SEO, and business automation.',
+    'With 6+ years of experience, Trust IT delivers reliable web development, custom software, social media solutions, graphic design, SEO, and business automation.',
   phone: '+880 1946-006100',
   email: 'hello@trustit.com',
   whatsapp: '+8801946006100',
@@ -707,7 +707,7 @@ const defaultSettings = {
     github: 'https://github.com',
   },
   stats: {
-    yearsExperience: 12,
+    yearsExperience: 6,
     projectsCompleted: 500,
     happyClients: 300,
     professionals: 50,
@@ -724,7 +724,7 @@ const defaultSettings = {
   seoDefaults: {
     siteTitle: 'Trust IT — Building Digital Solutions You Can Trust | IT Company in Bangladesh',
     metaDescription:
-      'Trust IT is a premier Bangladeshi IT company with 12+ years of experience delivering web development, custom software, cloud engineering, and cybersecurity.',
+      'Trust IT is a premier Bangladeshi IT company with 6+ years of experience delivering web development, custom software, cloud engineering, and cybersecurity.',
     keywords: [
       'IT Company in Bangladesh',
       'Software Company in Bangladesh',
@@ -761,61 +761,140 @@ export async function runSeedIfEmpty(): Promise<void> {
     await repos.websiteSettings.create(defaultSettings);
   } else {
     const existingSettings = await repos.websiteSettings.findOne({});
-    if (existingSettings && existingSettings.phone === '+880 1711-000000') {
-      await repos.websiteSettings.updateById(existingSettings._id, {
-        tagline: defaultSettings.tagline,
-        altTagline: defaultSettings.altTagline,
-        heroHeadline: defaultSettings.heroHeadline,
-        heroSubheadline: defaultSettings.heroSubheadline,
-        phone: defaultSettings.phone,
-        email: defaultSettings.email,
-        whatsapp: defaultSettings.whatsapp,
-        address: defaultSettings.address,
-        businessHours: defaultSettings.businessHours,
-      });
+    if (existingSettings) {
+      const legacyExperience =
+        existingSettings.experienceYears === 12 ||
+        existingSettings.stats?.yearsExperience === 12 ||
+        existingSettings.heroSubheadline?.includes('12+') ||
+        existingSettings.seoDefaults?.metaDescription?.includes('12+');
+      if (existingSettings.phone === '+880 1711-000000' || legacyExperience) {
+        await repos.websiteSettings.updateById(existingSettings._id, {
+          experienceYears: 6,
+          tagline: defaultSettings.tagline,
+          altTagline: defaultSettings.altTagline,
+          heroHeadline: existingSettings.heroHeadline || defaultSettings.heroHeadline,
+          heroSubheadline: existingSettings.heroSubheadline?.includes('12+')
+            ? existingSettings.heroSubheadline.replace(/12\+/g, '6+')
+            : defaultSettings.heroSubheadline,
+          stats: {
+            ...(existingSettings.stats || defaultSettings.stats),
+            yearsExperience: 6,
+          },
+          seoDefaults: {
+            ...(existingSettings.seoDefaults || defaultSettings.seoDefaults),
+            metaDescription: existingSettings.seoDefaults?.metaDescription?.includes('12+')
+              ? existingSettings.seoDefaults.metaDescription.replace(/12\+/g, '6+')
+              : defaultSettings.seoDefaults.metaDescription,
+          },
+          ...(existingSettings.phone === '+880 1711-000000'
+            ? {
+                phone: defaultSettings.phone,
+                email: defaultSettings.email,
+                whatsapp: defaultSettings.whatsapp,
+                address: defaultSettings.address,
+                businessHours: defaultSettings.businessHours,
+              }
+            : {}),
+        });
+      }
     }
   }
-  if ((await repos.serviceCategories.count()) === 0) {
+
+  const removedStackOrExperience = /\b(python|php|redis|azure|flutter)\b|12\+\s*years?|over 12 years/i;
+
+  const existingCategories = await repos.serviceCategories.findAll({ limit: 50 });
+  if (
+    existingCategories.total === 0 ||
+    existingCategories.items.some((c: any) => removedStackOrExperience.test(JSON.stringify(c)))
+  ) {
+    await repos.serviceCategories.clearAll();
     for (const cat of seedServiceCategories) await repos.serviceCategories.create(cat);
   }
+
   const existingServices = await repos.services.findAll({ limit: 50 });
   const smmService = existingServices.items.find((s: any) => s.slug === 'social-media-marketing');
   const needsServiceUpgrade =
     existingServices.total === 0 ||
     existingServices.items.some((s: any) => !s.filterGroup || !s.status) ||
+    existingServices.items.some((s: any) => removedStackOrExperience.test(JSON.stringify(s))) ||
     !smmService?.packages?.some((p: any) => p.name.includes('BIN Verification'));
   if (needsServiceUpgrade) {
     await repos.services.clearAll();
     for (const s of seedServices) await repos.services.create(s);
-    console.log('[Seed] Services catalog initialized/upgraded with Social Media Solutions & full 16 practices');
+    console.log('[Seed] Services catalog initialized/upgraded with 6+ years & updated stack');
   }
-  if ((await repos.solutions.count()) === 0) {
+
+  const existingSolutions = await repos.solutions.findAll({ limit: 50 });
+  if (
+    existingSolutions.total === 0 ||
+    existingSolutions.items.some((s: any) => removedStackOrExperience.test(JSON.stringify(s)))
+  ) {
+    await repos.solutions.clearAll();
     for (const sol of seedSolutions) await repos.solutions.create(sol);
   }
-  if ((await repos.industries.count()) === 0) {
+
+  const existingIndustries = await repos.industries.findAll({ limit: 50 });
+  if (
+    existingIndustries.total === 0 ||
+    existingIndustries.items.some((i: any) => removedStackOrExperience.test(JSON.stringify(i)))
+  ) {
+    await repos.industries.clearAll();
     for (const ind of seedIndustries) await repos.industries.create(ind);
   }
-  if ((await repos.projects.count()) === 0) {
+
+  const existingProjects = await repos.projects.findAll({ limit: 50 });
+  if (
+    existingProjects.total === 0 ||
+    existingProjects.items.some((p: any) => removedStackOrExperience.test(JSON.stringify(p)))
+  ) {
+    await repos.projects.clearAll();
     for (const p of seedProjects) await repos.projects.create(p);
   }
-  if ((await repos.caseStudies.count()) === 0) {
+
+  const existingCaseStudies = await repos.caseStudies.findAll({ limit: 50 });
+  if (
+    existingCaseStudies.total === 0 ||
+    existingCaseStudies.items.some((cs: any) => removedStackOrExperience.test(JSON.stringify(cs)))
+  ) {
+    await repos.caseStudies.clearAll();
     for (const cs of seedCaseStudies) await repos.caseStudies.create(cs);
   }
+
   if ((await repos.categories.count()) === 0) {
     for (const cat of seedCategories) await repos.categories.create(cat);
   }
-  if ((await repos.blogPosts.count()) === 0) {
+
+  const existingBlogs = await repos.blogPosts.findAll({ limit: 50 });
+  if (
+    existingBlogs.total === 0 ||
+    existingBlogs.items.some((b: any) => removedStackOrExperience.test(JSON.stringify(b)))
+  ) {
+    await repos.blogPosts.clearAll();
     for (const post of seedBlogPosts) await repos.blogPosts.create(post);
   }
-  if ((await repos.teamMembers.count()) === 0) {
+
+  const existingTeam = await repos.teamMembers.findAll({ limit: 50 });
+  if (
+    existingTeam.total === 0 ||
+    existingTeam.items.some((m: any) => removedStackOrExperience.test(JSON.stringify(m)))
+  ) {
+    await repos.teamMembers.clearAll();
     for (const member of seedTeam) await repos.teamMembers.create(member);
   }
+
   if ((await repos.testimonials.count()) === 0) {
     for (const t of seedTestimonials) await repos.testimonials.create(t);
   }
-  if ((await repos.faqs.count()) === 0) {
+
+  const existingFaqs = await repos.faqs.findAll({ limit: 50 });
+  if (
+    existingFaqs.total === 0 ||
+    existingFaqs.items.some((f: any) => removedStackOrExperience.test(JSON.stringify(f)))
+  ) {
+    await repos.faqs.clearAll();
     for (const f of seedFaqs) await repos.faqs.create(f);
   }
+
   if ((await repos.careers.count()) === 0) {
     for (const c of seedCareers) await repos.careers.create(c);
   }

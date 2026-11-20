@@ -66,20 +66,19 @@ const techCategories: Record<string, { name: string; role: string }[]> = {
   Backend: [
     { name: 'Node.js', role: 'High-Throughput Runtime' },
     { name: 'Express.js', role: 'Modular REST APIs' },
-    { name: 'Python', role: 'Automation & Data Pipelines' },
+    { name: 'TypeScript APIs', role: 'Schema-Validated Services' },
     { name: 'Laravel', role: 'Rapid Enterprise Backends' },
-    { name: 'PHP', role: 'Legacy Modernization' },
   ],
   Database: [
     { name: 'MongoDB', role: 'Flexible Document Store' },
     { name: 'PostgreSQL', role: 'ACID Financial Ledgers' },
     { name: 'MySQL', role: 'Relational Web Workloads' },
-    { name: 'Redis', role: 'Sub-ms Caching & Queues' },
+    { name: 'Mongoose & Indexing', role: 'Schema & Query Optimization' },
   ],
   Cloud: [
     { name: 'AWS', role: 'ECS, RDS, S3 & CloudFront' },
     { name: 'Google Cloud', role: 'Cloud Run & BigQuery' },
-    { name: 'Azure', role: 'Enterprise Active Directory' },
+    { name: 'Cloudflare', role: 'Edge CDN & WAF Security' },
     { name: 'Cloudinary', role: 'Responsive Media CDN' },
   ],
   DevOps: [
@@ -90,7 +89,8 @@ const techCategories: Record<string, { name: string; role: string }[]> = {
   ],
   Mobile: [
     { name: 'React Native', role: 'Shared iOS & Android Core' },
-    { name: 'Flutter', role: 'High-FPS Native Interfaces' },
+    { name: 'Android & iOS Native', role: 'Biometrics, GPS & Push Sync' },
+    { name: 'Offline Storage', role: 'Resilient Field App Sync' },
   ],
 };
 
@@ -109,7 +109,7 @@ const recommendationMatrix: Record<
     service: 'Custom Software & ERP Solutions',
     slug: '/solutions/erp-solutions',
     timeline: '10–16 Weeks',
-    stack: 'React, Node.js, MongoDB / PostgreSQL, Redis',
+    stack: 'React, Node.js, MongoDB / PostgreSQL, Docker',
     outcome: 'Unified branch inventory, VAT-ready accounting, and automated management approvals.',
   },
   'commerce-scale': {
@@ -141,7 +141,7 @@ export function InteractiveProcessSection() {
             How We Engineer Predictable Software Outcomes
           </h2>
           <p className="mt-3 text-slate-600 text-base">
-            Every Trust IT engagement follows a transparent seven-stage lifecycle refined over 12+ years and 500+ production launches.
+            Every Trust IT engagement follows a transparent seven-stage lifecycle refined over 6+ years and 500+ production launches.
           </p>
         </div>
 

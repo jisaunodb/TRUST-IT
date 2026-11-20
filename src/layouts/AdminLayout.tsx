@@ -21,6 +21,7 @@ import {
   X,
 } from 'lucide-react';
 import { ToastProvider } from '../components/admin/AdminUi';
+import { BrandLogo } from '../components/common/BrandLogo';
 import { useAuth } from '../hooks/useAuth';
 
 const navSections = [
@@ -92,16 +93,12 @@ export function AdminLayout() {
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
-          <div className="h-16 px-5 border-b border-slate-800 flex items-center justify-between shrink-0">
-            <Link to="/admin" className="inline-flex items-center gap-2.5 text-base font-bold text-white tracking-tight">
-              <img
-                src="/assets/aistudio/trust-it_2e09824d.jpg"
-                alt="Trust IT Logo"
-                width={28}
-                height={28}
-                className="w-7 h-7 rounded-full object-cover ring-1 ring-amber-500/60 shrink-0"
-              />
-              <span>TRUST IT CMS</span>
+          <div className="h-16 px-4 border-b border-slate-800 flex items-center justify-between shrink-0">
+            <Link to="/admin" className="inline-flex items-center gap-2.5 text-white tracking-tight">
+              <BrandLogo variant="sidebar" />
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-400 border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 rounded">
+                CMS
+              </span>
             </Link>
             <button
               type="button"

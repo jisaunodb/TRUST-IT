@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, ChevronDown } from 'lucide-react';
 import { AnimatedCounter } from '../components/common/AnimatedCounter';
+import { BrandLogo } from '../components/common/BrandLogo';
 import { LucideIcon } from '../components/common/LucideIcon';
 import { CtaSection } from '../components/common/PagePrimitives';
 import { SafeImage } from '../components/common/SafeImage';
@@ -44,7 +45,7 @@ export function HomePage() {
     title: settings.seoDefaults?.siteTitle || 'Trust IT — Building Digital Solutions You Can Trust',
     description:
       settings.seoDefaults?.metaDescription ||
-      'With 12+ years of experience, Trust IT delivers reliable web, software, cloud, and digital solutions in Bangladesh.',
+      'With 6+ years of experience, Trust IT delivers reliable web, software, cloud, and digital solutions in Bangladesh.',
     canonicalPath: '/',
     schema: {
       '@context': 'https://schema.org',
@@ -97,16 +98,11 @@ export function HomePage() {
         <div className="max-w-7xl mx-auto px-6 pt-16 pb-12 lg:pt-24 lg:pb-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
             <div className="lg:col-span-6 flex flex-col justify-center">
-              <div className="inline-flex items-center gap-3 mb-5">
-                <img
-                  src="/assets/aistudio/trust-it_2e09824d.jpg"
-                  alt="Trust IT Emblem"
-                  width={32}
-                  height={32}
-                  className="w-8 h-8 rounded-full object-cover ring-1 ring-amber-400/70 shrink-0"
-                />
+              <div className="flex flex-wrap items-center gap-4 mb-5">
+                <BrandLogo variant="hero" />
+                <div className="hidden sm:block h-9 w-px bg-slate-800" aria-hidden="true" />
                 <p className="text-xs font-semibold text-amber-400 tracking-wide">
-                  Social Media Solutions · 12+ Years in IT · Dhaka, Bangladesh
+                  6+ Years in IT · Dhaka, Bangladesh
                 </p>
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight leading-[1.08] text-white text-balance">
@@ -148,7 +144,7 @@ export function HomePage() {
           <div className="mt-14 pt-10 border-t border-slate-800/90 grid grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
               <p className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                <AnimatedCounter target={settings.stats?.yearsExperience || 12} suffix="+" />
+                <AnimatedCounter target={settings.stats?.yearsExperience || 6} suffix="+" />
               </p>
               <p className="mt-1 text-sm text-slate-400">Years Experience</p>
             </div>
@@ -194,7 +190,7 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* 3. ABOUT TRUST IT & WHY 12+ YEARS MATTERS */}
+      {/* 3. ABOUT TRUST IT & WHY 6+ YEARS MATTERS */}
       <section className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
           <div className="lg:col-span-6 min-h-[320px]">
@@ -208,12 +204,12 @@ export function HomePage() {
           </div>
           <div className="lg:col-span-6 flex flex-col justify-center space-y-6">
             <div>
-              <p className="text-xs font-semibold text-blue-700 mb-2">Why 12+ Years of Experience Matters</p>
+              <p className="text-xs font-semibold text-blue-700 mb-2">Why 6+ Years of Experience Matters</p>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-950 text-balance">
                 Built for Long-Term Reliability, Not Short-Term Demos
               </h2>
               <p className="mt-4 text-slate-600 leading-relaxed">
-                Since 2014, Trust IT has partnered with Bangladeshi enterprises, high-growth startups, educational institutions, and global organizations to engineer software that remains fast, secure, and maintainable years after launch.
+                Since 2020, Trust IT has partnered with Bangladeshi enterprises, high-growth startups, educational institutions, and global organizations to engineer software that remains fast, secure, and maintainable years after launch.
               </p>
             </div>
 
@@ -252,7 +248,7 @@ export function HomePage() {
                 to="/about"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-blue-700 hover:text-blue-800"
               >
-                Read Our 12+ Year Story
+                Read Our 6+ Year Story
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>

@@ -42,7 +42,7 @@ export function IndustriesPage() {
       <PageBanner
         eyebrow="Domain Expertise"
         title="Software Engineered for Industry Realities"
-        description="Across 12+ years, we have mastered the operational, regulatory, and compliance requirements of 11 vital economic sectors."
+        description="Across 6+ years, we have mastered the operational, regulatory, and compliance requirements of 11 vital economic sectors."
         breadcrumbs={[{ label: 'Industries' }]}
       />
 

@@ -26,18 +26,17 @@ const fullTechStack = [
     items: [
       { name: 'Node.js', desc: 'High-concurrency API runtime' },
       { name: 'Express.js', desc: 'RESTful API & security middleware' },
-      { name: 'Python', desc: 'Automation, data pipelines & AI integration' },
-      { name: 'PHP', desc: 'Legacy enterprise platform maintenance' },
+      { name: 'TypeScript APIs', desc: 'Schema-validated REST & service backends' },
       { name: 'Laravel', desc: 'Structured MVC business applications' },
     ],
   },
   {
-    category: 'Databases & Caching',
+    category: 'Databases & Storage',
     items: [
       { name: 'MongoDB', desc: 'Flexible, horizontally scalable NoSQL' },
       { name: 'PostgreSQL', desc: 'ACID-compliant financial & ERP ledgers' },
       { name: 'MySQL', desc: 'Proven relational web workloads' },
-      { name: 'Redis', desc: 'In-memory caching, sessions & queues' },
+      { name: 'Mongoose & Indexing', desc: 'Type-safe modeling, aggregation & tuning' },
     ],
   },
   {
@@ -45,7 +44,7 @@ const fullTechStack = [
     items: [
       { name: 'AWS', desc: 'ECS, EC2, RDS, S3 & CloudFront' },
       { name: 'Google Cloud', desc: 'Cloud Run, GKE & BigQuery' },
-      { name: 'Azure', desc: 'Enterprise AD & hybrid cloud hosting' },
+      { name: 'Cloudflare', desc: 'Edge DNS, SSL, WAF & global CDN routing' },
       { name: 'Cloudinary', desc: 'Automated image/video CDN & optimization' },
     ],
   },
@@ -62,7 +61,8 @@ const fullTechStack = [
     category: 'Mobile Engineering',
     items: [
       { name: 'React Native', desc: 'Unified iOS & Android engineering' },
-      { name: 'Flutter', desc: 'High-performance cross-platform apps' },
+      { name: 'Android & iOS Native APIs', desc: 'Biometrics, GPS, push notifications & offline sync' },
+      { name: 'Expo & Store CI', desc: 'Streamlined Play Store & App Store release pipelines' },
     ],
   },
 ];

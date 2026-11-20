@@ -1,6 +1,6 @@
 # Trust IT — Enterprise IT Solutions Platform
 
-Production full-stack platform for **Trust IT** ("Technology You Can Trust" · 12+ Years of Experience in IT Solutions, Dhaka, Bangladesh).
+Production full-stack platform for **Trust IT** ("Technology You Can Trust" · 6+ Years of Experience in IT Solutions, Dhaka, Bangladesh).
 
 ## Architecture Overview
 
@@ -12,7 +12,7 @@ Production full-stack platform for **Trust IT** ("Technology You Can Trust" · 1
 ## Key Routes
 
 ### Public Website
-- `/` — Homepage (Hero, Trust Counters, Client Logos, Why 12+ Years Matters, Services, Solutions, Interactive 01–07 Process, Architecture Advisor, Industries, Interactive Tech Stack, Projects, Case Studies, Testimonials, Team, Blog, FAQ, CTA)
+- `/` — Homepage (Hero, Trust Counters, Client Logos, Why 6+ Years Matters, Services, Solutions, Interactive 01–07 Process, Architecture Advisor, Industries, Interactive Tech Stack, Projects, Case Studies, Testimonials, Team, Blog, FAQ, CTA)
 - `/about`, `/services`, `/services/:slug`, `/solutions`, `/solutions/:slug`, `/industries`, `/industries/:slug`
 - `/projects`, `/projects/:slug`, `/case-studies`, `/case-studies/:slug`
 - `/technologies`, `/team`, `/careers`, `/careers/:slug`, `/blog`, `/blog/:slug`

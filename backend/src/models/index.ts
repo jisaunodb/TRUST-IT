@@ -335,7 +335,7 @@ const WebsiteSettingSchema = new Schema(
     companyName: { type: String, required: true },
     tagline: { type: String, required: true },
     altTagline: { type: String, required: true },
-    experienceYears: { type: Number, default: 12 },
+    experienceYears: { type: Number, default: 6 },
     heroHeadline: { type: String, required: true },
     heroSubheadline: { type: String, required: true },
     phone: { type: String, required: true },

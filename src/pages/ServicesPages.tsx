@@ -123,7 +123,7 @@ export function ServicesPage() {
         <div className="max-w-7xl mx-auto px-6 py-16 lg:py-24">
           <div className="max-w-3xl space-y-6">
             <p className="text-xs font-semibold text-sky-400 tracking-wide">
-              12+ Years of Experience · 10 Full-Spectrum Practice Areas
+              6+ Years of Experience · 10 Full-Spectrum Practice Areas
             </p>
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.08] text-balance">
               Technology &amp; Digital Solutions Built for Growth
@@ -162,7 +162,7 @@ export function ServicesPage() {
               <p className="mt-0.5">Projects &amp; Campaigns Shipped</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-white tabular-nums">12+ Yrs</p>
+              <p className="text-2xl font-bold text-white tabular-nums">6+ Yrs</p>
               <p className="mt-0.5">In-House Engineering Heritage</p>
             </div>
           </div>

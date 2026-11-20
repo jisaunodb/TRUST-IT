@@ -17,7 +17,7 @@ export const contactSchema = z.object({
   phone: z.string().min(6, 'Please provide a valid phone number'),
   company: z.string().optional().default(''),
   service: z.string().min(2, 'Please select a service'),
-  budget: z.string().min(2, 'Please select an estimated budget'),
+  budget: z.string().trim().min(2, 'Please select or enter an estimated budget').max(120, 'Budget value is too long'),
   message: z.string().min(10, 'Please describe your project requirements (at least 10 characters)'),
 });
 

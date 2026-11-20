@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useSeo } from '../../hooks/useSeo';
+import { BrandLogo } from '../../components/common/BrandLogo';
 
 export function AdminLoginPage() {
   const { admin, loading, needsSetup, login, setupFirstAdmin } = useAuth();
@@ -44,14 +45,10 @@ export function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center px-4 py-12">
       <div className="w-full max-w-md bg-white rounded-xl border border-slate-200 p-8 shadow-xl space-y-6">
-        <div className="space-y-2">
-          <img
-            src="/assets/aistudio/trust-it_2e09824d.jpg"
-            alt="Trust IT — Social Media Solutions"
-            width={52}
-            height={52}
-            className="w-13 h-13 rounded-full object-cover ring-2 ring-amber-500/60"
-          />
+        <div className="space-y-3">
+          <div className="pb-1">
+            <BrandLogo variant="login" />
+          </div>
           <h1 className="text-2xl font-bold text-slate-950">
             {needsSetup ? 'Initialize Super Admin' : 'Trust IT Admin Console'}
           </h1>

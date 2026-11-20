@@ -60,7 +60,7 @@ export function BlogPage() {
     <div>
       <PageBanner
         eyebrow="Engineering & Strategy Blog"
-        title="Insights From 12+ Years of Software Delivery"
+        title="Insights From 6+ Years of Software Delivery"
         description="Technical guides, architecture decisions, and digital growth strategies written by Trust IT’s principal engineers and designers."
         breadcrumbs={[{ label: 'Blog' }]}
       />

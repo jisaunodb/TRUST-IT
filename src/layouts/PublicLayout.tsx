@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, Search, X } from 'lucide-react';
+import { BrandLogo } from '../components/common/BrandLogo';
 import { useSiteSettings } from '../hooks/useSiteSettings';
 import { api } from '../services/api';
 
@@ -22,7 +23,7 @@ const megaMenus = {
     { label: 'Engagement Pricing', to: '/pricing', desc: 'Project & dedicated team models' },
   ],
   company: [
-    { label: 'About Trust IT', to: '/about', desc: '12+ years journey & milestones' },
+    { label: 'About Trust IT', to: '/about', desc: '6+ years journey & milestones' },
     { label: 'Leadership & Team', to: '/team', desc: 'Meet our 50+ engineering experts' },
     { label: 'Client Testimonials', to: '/testimonials', desc: 'Verified client outcomes' },
     { label: 'Open Careers', to: '/careers', desc: 'Join our Dhaka engineering center' },
@@ -79,25 +80,14 @@ export function PublicLayout() {
         }`}
         onMouseLeave={() => setOpenMenu(null)}
       >
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-8">
-          {/* Zone 1: Official Brand Emblem + Wordmark */}
+        <div className="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between gap-8">
+          {/* Zone 1: Official Trust IT Transparent Brand Logo */}
           <Link
             to="/"
-            className="inline-flex items-center gap-2.5 text-lg font-extrabold tracking-tight text-slate-950 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-blue-700 rounded"
+            aria-label="Trust IT — Social Media Solutions Home"
+            className="inline-flex items-center shrink-0 focus-visible:outline-2 focus-visible:outline-blue-700 rounded py-1"
           >
-            <img
-              src="/assets/aistudio/trust-it_2e09824d.jpg"
-              alt="Trust IT — Social Media Solutions Logo"
-              width={36}
-              height={36}
-              className="w-9 h-9 rounded-full object-cover ring-1 ring-amber-500/60 shrink-0"
-            />
-            <span className="leading-none flex flex-col">
-              <span>TRUST IT</span>
-              <span className="text-[9px] font-semibold tracking-[0.14em] text-amber-700 uppercase mt-0.5">
-                Social Media Solutions
-              </span>
-            </span>
+            <BrandLogo variant="navbar" />
           </Link>
 
           {/* Zone 2: 5 concise single-line navigation links */}
@@ -180,7 +170,7 @@ export function PublicLayout() {
 
         {/* Mega Menu Panel */}
         {openMenu && (
-          <div className="hidden lg:block absolute left-0 right-0 top-16 bg-white border-b border-slate-200 shadow-lg">
+          <div className="hidden lg:block absolute left-0 right-0 top-[72px] bg-white border-b border-slate-200 shadow-lg">
             <div className="max-w-7xl mx-auto px-6 py-6 grid grid-cols-3 gap-4">
               {megaMenus[openMenu].map((item) => (
                 <Link
@@ -237,20 +227,8 @@ export function PublicLayout() {
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 pb-12 border-b border-slate-800/80">
             <div className="lg:col-span-2 space-y-4">
-              <Link to="/" className="inline-flex items-center gap-3 text-lg font-bold text-white">
-                <img
-                  src="/assets/aistudio/trust-it_2e09824d.jpg"
-                  alt="Trust IT Logo"
-                  width={42}
-                  height={42}
-                  className="w-10 h-10 rounded-full object-cover ring-1 ring-amber-500/60 shrink-0"
-                />
-                <span className="flex flex-col leading-none">
-                  <span>TRUST IT</span>
-                  <span className="text-[10px] font-semibold tracking-[0.14em] text-amber-400 uppercase mt-1">
-                    Social Media Solutions
-                  </span>
-                </span>
+              <Link to="/" aria-label="Trust IT Home" className="inline-flex items-center">
+                <BrandLogo variant="footer" />
               </Link>
               <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
                 {settings.tagline}. {settings.experienceYears}+ years delivering enterprise software, web platforms, cloud infrastructure, and digital solutions in Bangladesh and globally.

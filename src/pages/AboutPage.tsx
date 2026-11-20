@@ -9,10 +9,10 @@ import { api } from '../services/api';
 import { PaginatedResponse, TeamMemberItem } from '../types';
 
 const milestones = [
-  { year: '2014', title: 'Founded in Dhaka', detail: 'Started as a 6-engineer web and custom software studio delivering corporate systems in Dhaka.' },
-  { year: '2017', title: 'Enterprise ERP & Retail Practice', detail: 'Launched our multi-branch inventory and POS suite serving nationwide retail chains.' },
-  { year: '2020', title: 'Cloud & DevOps Expansion', detail: 'Established dedicated AWS/GCP infrastructure, CI/CD automation, and 24/7 SLA monitoring.' },
-  { year: '2023', title: '300+ Active Clients & Global Delivery', detail: 'Expanded engineering partnerships to the UK, Middle East, and Southeast Asia.' },
+  { year: '2020', title: 'Founded in Dhaka', detail: 'Started as a 6-engineer web and custom software studio delivering corporate systems in Dhaka.' },
+  { year: '2021', title: 'Enterprise ERP & Retail Practice', detail: 'Launched our multi-branch inventory and POS suite serving nationwide retail chains.' },
+  { year: '2023', title: 'Cloud & DevOps Expansion', detail: 'Established dedicated AWS/GCP infrastructure, CI/CD automation, and 24/7 SLA monitoring.' },
+  { year: '2024', title: '300+ Active Clients & Global Delivery', detail: 'Expanded engineering partnerships to the UK, Middle East, and Southeast Asia.' },
   { year: '2026', title: '50+ Engineers & 500+ Projects', detail: 'Operating as a full-spectrum Bangladeshi enterprise IT partner across 11 core industries.' },
 ];
 
@@ -28,9 +28,9 @@ export function AboutPage() {
   const [leadership, setLeadership] = useState<TeamMemberItem[]>([]);
 
   useSeo({
-    title: 'About Trust IT — 12+ Years of Software & IT Excellence in Bangladesh',
+    title: 'About Trust IT — 6+ Years of Software & IT Excellence in Bangladesh',
     description:
-      'Learn about Trust IT’s 12+ year journey in Dhaka, Bangladesh—our mission, leadership team, milestones, and commitment to reliable enterprise software.',
+      'Learn about Trust IT’s 6+ year journey in Dhaka, Bangladesh—our mission, leadership team, milestones, and commitment to reliable enterprise software.',
     canonicalPath: '/about',
   });
 
@@ -45,8 +45,8 @@ export function AboutPage() {
     <div>
       <PageBanner
         eyebrow="About Trust IT"
-        title="12+ Years of Turning Ideas Into Reliable Digital Solutions"
-        description="Founded in Dhaka in 2014, Trust IT is an established Bangladeshi IT company delivering enterprise software, web platforms, cloud infrastructure, and cybersecurity."
+        title="6+ Years of Turning Ideas Into Reliable Digital Solutions"
+        description="Founded in Dhaka in 2020, Trust IT is an established Bangladeshi IT company delivering enterprise software, web platforms, cloud infrastructure, and cybersecurity."
         breadcrumbs={[{ label: 'About Us' }]}
       />
 
@@ -99,12 +99,12 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* 12+ Years Visual Timeline */}
+      {/* 6+ Years Visual Timeline */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-2xl mb-12">
             <p className="text-xs font-semibold text-blue-700 mb-2">Company Milestones</p>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-950">Our 12+ Year Journey</h2>
+            <h2 className="text-3xl font-bold tracking-tight text-slate-950">Our 6+ Year Journey</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
@@ -186,7 +186,7 @@ export function AboutPage() {
             </div>
             <div className="border border-slate-200 rounded-xl p-6 bg-slate-50">
               <CheckCircle2 className="w-6 h-6 text-blue-700 mb-3" />
-              <h3 className="text-base font-bold text-slate-950">98% Client Retention Over 12+ Years</h3>
+              <h3 className="text-base font-bold text-slate-950">98% Client Retention Over 6+ Years</h3>
               <p className="text-sm text-slate-600 mt-1.5">
                 Long-term retainers and repeat modernization mandates from leading Bangladeshi enterprises.
               </p>

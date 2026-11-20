@@ -7,10 +7,10 @@ const fallbackSettings: WebsiteSettingItem = {
   companyName: 'Trust IT',
   tagline: 'Social Media Solutions · Technology You Can Trust',
   altTagline: 'Your Vision, Our Strategy — Creative Solutions, Digital Growth & Lasting Success',
-  experienceYears: 12,
+  experienceYears: 6,
   heroHeadline: 'Building Digital & Social Solutions You Can Trust',
   heroSubheadline:
-    'With 12+ years of experience, Trust IT delivers reliable web development, custom software, social media solutions, graphic design, SEO, and business automation.',
+    'With 6+ years of experience, Trust IT delivers reliable web development, custom software, social media solutions, graphic design, SEO, and business automation.',
   phone: '+880 1946-006100',
   email: 'hello@trustit.com',
   whatsapp: '+8801946006100',
@@ -24,7 +24,7 @@ const fallbackSettings: WebsiteSettingItem = {
     github: 'https://github.com',
   },
   stats: {
-    yearsExperience: 12,
+    yearsExperience: 6,
     projectsCompleted: 500,
     happyClients: 300,
     professionals: 50,
@@ -40,7 +40,7 @@ const fallbackSettings: WebsiteSettingItem = {
   ],
   seoDefaults: {
     siteTitle: 'Trust IT — Building Digital Solutions You Can Trust',
-    metaDescription: '12+ years of software, web, cloud, and cybersecurity delivery in Bangladesh.',
+    metaDescription: '6+ years of software, web, cloud, and cybersecurity delivery in Bangladesh.',
     keywords: ['IT Company in Bangladesh', 'Software Company in Bangladesh'],
   },
 };
